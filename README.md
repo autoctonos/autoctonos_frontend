@@ -1,6 +1,6 @@
 
 
-## Getting Started
+## Setup
 
 1. Copy a .env-dev file in the root directory and rename it to .env and fill with your own values.
 
