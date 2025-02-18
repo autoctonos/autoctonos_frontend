@@ -7,6 +7,7 @@
 - node.js
 
 # Getting started
+1. In ./autoctronos-web excecute
 
 ```
 docker compose build 
