@@ -1,5 +1,0 @@
-out
-.git
-Dockerfile
-.dockerignore
-.env.local
