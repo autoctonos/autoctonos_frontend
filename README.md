@@ -2,5 +2,15 @@
     Autoctónos
 </h1>
 
+# Requisits
+- Docker
+- node.js
+
 # Getting started
 
+```
+docker compose build 
+```
+```
+docker compose up
+```
