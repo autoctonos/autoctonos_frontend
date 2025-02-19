@@ -2,24 +2,26 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { loginUser } from "../services/loginUser";
 
 interface Credentials {
-  email: string;
+  userName: string;
   password: string;
 }
 
 export const credentialsProvider = CredentialsProvider({
   name: "Credentials",
   credentials: {
-    email: { label: "Email", type: "text", placeholder: "tu@email.com" },
+    userName: { label: "Nombre de usuario", type: "text", placeholder: "Nombre" },
     password: { label: "Contraseña", type: "password" },
   },
-  async authorize(credentials) {
+  async authorize(credentials: Record<string, unknown>): Promise<any> {
     if (!credentials?.email || !credentials?.password) {
       throw new Error("Email y contraseña son obligatorios");
     }
+
     const userCredentials: Credentials = {
-      email: String(credentials.email),
+      userName: String(credentials.userName),
       password: String(credentials.password),
     };
+
     const user = await loginUser(userCredentials);
     if (!user) throw new Error("Credenciales inválidas");
 

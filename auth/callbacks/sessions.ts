@@ -10,7 +10,7 @@ export const sessionCallback = async ({
 }): Promise<Session> => {
   if (session.user) {
     session.user.id = token.id as string;
-    session.user.email = token.email as string;
+    session.user.userName = token.userName as string;
     session.user.role = token.role as string | undefined; // Puede ser opcional
   }
 

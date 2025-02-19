@@ -1,5 +1,5 @@
 interface Credentials {
-  email: string;
+  userName: string;
   password: string;
 }
 

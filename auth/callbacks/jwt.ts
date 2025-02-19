@@ -10,7 +10,7 @@ export const jwtCallback = async ({
 }): Promise<JWT> => {
   if (user) {
     token.id = user.id;
-    token.email = user.email;
+    token.userName = user.userName;
   }
   return token;
 };
