@@ -29,7 +29,7 @@ export default function LoginPage() {
   };
 
   return (
-    <section className="flex justify-center items-center h-screen">
+    <section className="flex justify-center items-center h-screen w-screen">
       <div className="flex flex-col justify-center items-center border border-black rounded-lg p-5 gap-5 w-96">
         <h1>Iniciar sesión</h1>
         <form onSubmit={handleSubmit} className="flex flex-col w-full gap-5">
