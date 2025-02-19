@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useSession } from "next-auth/react";
 import LoginButton from "../auth/loginButton";
@@ -11,7 +11,7 @@ export default function Header() {
     <header>
       <div className="flex justify-between px-20 py-10 border">
         <h1>Autóctonos</h1>
-        {session ? <LogoutButton />: <LoginButton />}
+        {session ? <LogoutButton /> : <LoginButton />}
       </div>
     </header>
   );

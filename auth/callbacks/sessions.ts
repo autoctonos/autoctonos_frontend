@@ -1,0 +1,20 @@
+import { Session } from "next-auth";
+import { JWT } from "next-auth/jwt";
+
+export const sessionCallback = async ({
+  session,
+  token,
+}: {
+  session: Session;
+  token: JWT;
+}): Promise<Session> => {
+  if (session.user) {
+    session.user.id = token.id as string;
+    session.user.email = token.email as string;
+    session.user.role = token.role as string | undefined; // Puede ser opcional
+  }
+
+  (session as any).accessToken = token.accessToken as string | undefined;
+
+  return session;
+};
