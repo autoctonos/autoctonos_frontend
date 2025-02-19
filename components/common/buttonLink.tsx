@@ -7,13 +7,13 @@ interface ButtonLinkProps {
   children: React.ReactNode;
 }
 
-export default function buttonLink({
+export default function ButtonLink({
   className,
   href,
   children,
 }: ButtonLinkProps) {
   return (
-    <Link href={href} className={`flex ${className}`}>
+    <Link href={href} className={`flex border px-5 py-3 rounded-xl hover:text-white hover:bg-black ${className}`}>
       {children}
     </Link>
   );
