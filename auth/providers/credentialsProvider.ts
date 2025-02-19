@@ -12,9 +12,10 @@ export const credentialsProvider = CredentialsProvider({
     userName: { label: "Nombre de usuario", type: "text", placeholder: "Nombre" },
     password: { label: "Contraseña", type: "password" },
   },
-  async authorize(credentials: Record<string, unknown>): Promise<any> {
-    if (!credentials?.email || !credentials?.password) {
-      throw new Error("Email y contraseña son obligatorios");
+  async authorize(credentials) {
+    // Verifica que credentials no sea undefined
+    if (!credentials || !credentials.userName || !credentials.password) {
+      throw new Error("Nombre de usuario y contraseña son obligatorios");
     }
 
     const userCredentials: Credentials = {
