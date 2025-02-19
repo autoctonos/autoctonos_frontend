@@ -11,7 +11,7 @@ export default function LoginButton({ className }: LoginButtonProps) {
   return (
     <button
       onClick={() => signIn()}
-      className={`py-2 rounded hover:bg-black hover:text-white ${className}`}
+      className={`py-2 border border-black p-5 rounded-xl hover:bg-black hover:text-white ${className}`}
     >
       Iniciar sesión
     </button>
