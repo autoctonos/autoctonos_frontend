@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import { Link } from "@heroui/link";
 import clsx from "clsx";
-
+import AuthProvider from "@/components/session/sessionProvider";
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
@@ -28,18 +28,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html suppressHydrationWarning lang="en">
-      <head />
+    <html lang="en">
       <body
-        className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-        )}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <AuthProvider>
         <Providers>
           <div className="relative flex flex-col h-screen">
             <Navbar />
@@ -59,6 +56,7 @@ export default function RootLayout({
             </footer>
           </div>
         </Providers>
+        </AuthProvider>
       </body>
     </html>
   );
