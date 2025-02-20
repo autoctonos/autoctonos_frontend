@@ -5,7 +5,7 @@ interface Credentials {
 
 export async function loginUser(credentials: Credentials) {
   try {
-    const authResponse = await fetch("http://django-web:8000/api/token/", {
+    const authResponse = await fetch(process.env.BACKEND_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
