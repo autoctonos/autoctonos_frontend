@@ -36,8 +36,8 @@ export default function LoginPage() {
           <div>
             <Input
               type="text"
-              placeholder="Ingesa tu número de identificación"
-              label="Número de identificación"
+              placeholder="John Doe"
+              label="Nombre de usuario"
               labelPlacement="outside"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}

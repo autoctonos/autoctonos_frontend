@@ -9,7 +9,7 @@ export async function loginUser(credentials: Credentials) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        username: credentials.userName, // 🔥 CAMBIADO "userName" → "username"
+        username: credentials.userName,
         password: credentials.password,
       }),
     });
