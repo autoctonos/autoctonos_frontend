@@ -11,7 +11,6 @@ export const sessionCallback = async ({
   if (session.user) {
     session.user.id = token.id as string;
     session.user.userName = token.userName as string;
-    session.user.role = token.role as string | undefined; // Puede ser opcional
   }
 
   (session as any).accessToken = token.accessToken as string | undefined;

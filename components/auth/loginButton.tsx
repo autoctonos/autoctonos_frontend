@@ -1,17 +1,14 @@
 "use client";
-
-import { signIn } from "next-auth/react";
-
 interface LoginButtonProps {
   type?: "button" | "submit" | "reset";
+  onClick?: () => void;
   className?: string;
 }
-
-export default function LoginButton({ className }: LoginButtonProps) {
+export default function LoginButton({ onClick, className }: LoginButtonProps) {
   return (
     <button
-      onClick={() => signIn()}
-      className={`py-2 border border-black p-5 rounded-xl hover:bg-black hover:text-white ${className}`}
+      onClick={onClick}
+      className={`py-2 rounded hover:bg-black hover:text-white ${className}`}
     >
       Iniciar sesión
     </button>

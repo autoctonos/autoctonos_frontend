@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Marca el componente como del lado del cliente
 
 import LoginButton from "@/components/auth/loginButton";
 import { Input } from "@nextui-org/react";
@@ -13,7 +13,6 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log("🔼 Enviando credenciales:", { userName, password });
     e.preventDefault();
 
     const result = await signIn("credentials", {
@@ -22,10 +21,7 @@ export default function LoginPage() {
       password,
     });
 
-    console.log("Login Response:", result);
-
     if (result?.error) {
-      console.error("❌ Error en login:", result.error);
       setError(result.error);
     } else {
       router.push("/");
@@ -33,15 +29,15 @@ export default function LoginPage() {
   };
 
   return (
-    <section className="flex justify-center items-center h-screen w-screen">
+    <section className="flex justify-center items-center h-screen">
       <div className="flex flex-col justify-center items-center border border-black rounded-lg p-5 gap-5 w-96">
         <h1>Iniciar sesión</h1>
         <form onSubmit={handleSubmit} className="flex flex-col w-full gap-5">
           <div>
             <Input
               type="text"
-              placeholder="John Doe"
-              label="Nombre de usuario"
+              placeholder="Ingesa tu número de identificación"
+              label="Número de identificación"
               labelPlacement="outside"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
