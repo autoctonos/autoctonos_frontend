@@ -16,7 +16,6 @@ export const credentialsProvider = CredentialsProvider({
     password: { label: "Contraseña", type: "password" },
   },
   async authorize(credentials) {
-    console.log("📩 Credenciales recibidas en NextAuth:", credentials);
     if (!credentials || !credentials.userName || !credentials.password) {
       throw new Error("Nombre de usuario y contraseña son obligatorios");
     }
