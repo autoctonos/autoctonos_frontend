@@ -9,11 +9,14 @@ interface Credentials {
 export const credentialsProvider = CredentialsProvider({
   name: "Credentials",
   credentials: {
-    userName: { label: "Nombre de usuario", type: "text", placeholder: "Nombre" },
+    userName: {
+      label: "Nombre de usuario",
+      type: "text",
+    },
     password: { label: "Contraseña", type: "password" },
   },
   async authorize(credentials) {
-    // Verifica que credentials no sea undefined
+    console.log("📩 Credenciales recibidas en NextAuth:", credentials);
     if (!credentials || !credentials.userName || !credentials.password) {
       throw new Error("Nombre de usuario y contraseña son obligatorios");
     }

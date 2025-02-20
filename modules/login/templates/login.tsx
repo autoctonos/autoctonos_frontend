@@ -7,21 +7,25 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
-  const [numero_identificacion, setNumeroIdentificacion] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log("🔼 Enviando credenciales:", { userName, password });
     e.preventDefault();
 
     const result = await signIn("credentials", {
       redirect: false,
-      numero_identificacion,
+      userName,
       password,
     });
 
+    console.log("Login Response:", result);
+
     if (result?.error) {
+      console.error("❌ Error en login:", result.error);
       setError(result.error);
     } else {
       router.push("/");
@@ -36,11 +40,11 @@ export default function LoginPage() {
           <div>
             <Input
               type="text"
-              placeholder="Ingesa tu número de identificación"
-              label="Número de identificación"
+              placeholder="John Doe"
+              label="Nombre de usuario"
               labelPlacement="outside"
-              value={numero_identificacion}
-              onChange={(e) => setNumeroIdentificacion(e.target.value)}
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
               required
               variant="bordered"
               color="primary"
