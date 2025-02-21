@@ -5,21 +5,18 @@ export const siteConfig = {
   description: "Autóctonos es una empresa dedicada a venta de productos de la región",
   navItems: [
     {
-      label: "Inicio",
+      label: "Productos",
       href: "/",
     },
     {
-      label: "Productos",
+      label: "¿Cómo funciona?",
       href: "/docs",
     },
     {
-      label: "¿Cómo funciona?",
+      label: "Categorías",
       href: "/pricing",
     },
-    {
-      label: "Categorias",
-      href: "/blog",
-    },
+
 
   ],
   navMenuItems: [
