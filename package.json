@@ -9,16 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/button": "^2.2.13",
+    "@heroui/input": "^2.4.13",
+    "@heroui/kbd": "^2.2.10",
+    "@heroui/link": "^2.2.11",
     "@heroui/navbar": "^2.2.12",
-    "@heroui/react": "^2.7.2",
-    "@heroui/system": "^2.4.10",
     "@heroui/theme": "^2.4.9",
-    "framer-motion": "^12.4.5",
-    "next": "15.1.7",
-    "next-themes": "^0.4.4",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@nextui-org/react": "^2.6.11",
+    "next": "^15.1.7",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

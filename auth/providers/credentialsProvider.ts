@@ -27,7 +27,6 @@ export const credentialsProvider = CredentialsProvider({
 
     const user = await loginUser(userCredentials);
     if (!user) throw new Error("Credenciales inválidas");
-
     return user;
   },
 });

@@ -1,7 +1,7 @@
 "use client"; // Marca el componente como del lado del cliente
 
 import LoginButton from "@/components/auth/loginButton";
-import { Input } from "@nextui-org/react";
+import { Input } from "@heroui/input";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -24,7 +24,7 @@ export default function LoginPage() {
     if (result?.error) {
       setError(result.error);
     } else {
-      router.push("/");
+      router.push("/dashboard");
     }
   };
 

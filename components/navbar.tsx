@@ -20,7 +20,6 @@ import { siteConfig } from "@/config/site";
 import {
   TwitterIcon,
   GithubIcon,
-  DiscordIcon,
   HeartFilledIcon,
   SearchIcon,
   Logo,

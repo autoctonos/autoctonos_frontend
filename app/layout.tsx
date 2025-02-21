@@ -2,7 +2,8 @@ import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import { Link } from "@heroui/link";
 import clsx from "clsx";
-import AuthProvider from "@/components/session/sessionProvider";
+import React from "react";
+
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
@@ -23,20 +24,24 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
+    <html suppressHydrationWarning lang="en">
+      <head />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={clsx(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable,
+        )}
       >
-        <AuthProvider>
         <Providers>
           <div className="relative flex flex-col h-screen">
             <Navbar />
@@ -50,13 +55,12 @@ export default function RootLayout({
                 href="https://heroui.com?utm_source=next-app-template"
                 title="heroui.com homepage"
               >
-                <span className="text-default-600">Hecho por</span>
-                <p className="text-primary">Autóctonos</p>
+                <span className="text-default-600">Powered by</span>
+                <p className="text-primary">HeroUI</p>
               </Link>
             </footer>
           </div>
         </Providers>
-        </AuthProvider>
       </body>
     </html>
   );
