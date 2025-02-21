@@ -1,4 +1,4 @@
-"use client"; // Marca el componente como del lado del cliente
+"use client";
 
 import LoginButton from "@/components/auth/loginButton";
 import { Input } from "@heroui/input";
