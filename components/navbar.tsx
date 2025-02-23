@@ -18,17 +18,15 @@ import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 
 import {
-  TwitterIcon,
-  GithubIcon,
   HeartFilledIcon,
   SearchIcon,
   Logo,
+  UserIcon,
 } from "@/components/icons";
 
 export const Navbar = () => {
   const searchInput = (
     <Input
-      className="w-full md:w-96"  
       aria-label="Search"
       classNames={{
         inputWrapper: "bg-default-100 w-full",
@@ -73,6 +71,7 @@ export const Navbar = () => {
             </NavbarItem>
           ))}
         </ul>
+
       </NavbarContent>
 
       <NavbarContent
@@ -81,30 +80,31 @@ export const Navbar = () => {
       >
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
-            <TwitterIcon className="text-default-500" />
-          </Link>
+          <NextLink href="/producers">
+            <Button
+              className="text-sm font-normal text-default-600 bg-default-100"
+              startContent={<HeartFilledIcon className="text-danger" />}
+              variant="flat"
+            >
+              Nuestros Productores
+            </Button>
+          </NextLink>
         </NavbarItem>
-        
+
         <NavbarItem className="hidden md:flex">
-          <Button
-            isExternal
-            as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            startContent={<HeartFilledIcon className="text-danger" />}
-            variant="flat"
-          >
-            Nuestros Productores
-          </Button>
+          <NextLink href="/login">
+            <Button
+              className="text-sm font-normal text-default-600 bg-default-100"
+              startContent={<UserIcon className="text-default-500" />}
+              variant="flat"
+            >
+              Login
+            </Button>
+          </NextLink>
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link>
-
         <NavbarMenuToggle />
       </NavbarContent>
 
