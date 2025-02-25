@@ -1,8 +1,17 @@
+"use server";
+
 import MainLayout from "@/components/layout/main";
 import { title, subtitle } from "@/components/primitives";
+import ProductsList from "@/components/product-list";
+import { getProducts } from "@/auth/services/products";
 
+export default async function Home() {
+  const { success, data, message } = await getProducts();
+  
+  if (!success) {
+    return <p>Error: {message}</p>;
+  }
 
-export default function Home() {
   return (
     <MainLayout>
       <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
@@ -16,7 +25,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </MainLayout>
 
+      <span className={subtitle()}>Productos Destacados&nbsp;</span>
+
+      <ProductsList products={data} />
+    </MainLayout>
   );
 }
