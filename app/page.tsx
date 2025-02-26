@@ -3,10 +3,11 @@
 import MainLayout from "@/components/layout/main";
 import { title, subtitle } from "@/components/primitives";
 import ProductsList from "@/components/product-list";
-import { getProducts } from "@/auth/services/products";
+import { getProductsImages } from "@/auth/services/products-image";
 
 export default async function Home() {
-  const { success, data, message } = await getProducts();
+  const { success, data, message } = await getProductsImages();
+
   
   if (!success) {
     return <p>Error: {message}</p>;
