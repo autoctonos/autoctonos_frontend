@@ -13,11 +13,12 @@ export const getProducts = async () => {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message || "Error al registrar usuario.");
+            throw new Error(data.message || "Error al obtener productos.");
         }
         return { success: true, data };
 
     } catch (error) {
-        return { success: false, message: error.message };
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido";
+        return { success: false, message: errorMessage };
     }
 };
