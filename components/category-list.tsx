@@ -8,7 +8,6 @@ export default function CategoryList({categories} : {categories : any[]}) {
     if (!categories || categories.length === 0) {
         return <p>No hay productos disponibles.</p>;
       }    
-      console.log(categories)
 
     const router = useRouter();
     const [imagesLoaded, setImagesLoaded] = useState(false);
