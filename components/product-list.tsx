@@ -2,7 +2,7 @@
 import { Card, CardBody, CardFooter, Image } from "@heroui/react";
 import { useRouter } from "next/navigation";
 
-export default function App({ products }: { products: any[] }) {
+export default function ProductList({ products }: { products: any[] }) {
   const router = useRouter();
 
   if (!products || products.length === 0) {
