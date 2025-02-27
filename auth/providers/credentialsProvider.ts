@@ -1,5 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import { loginUser } from "../services/loginUser";
+import { loginUser } from "@/auth/services/server/loginUser";
 
 interface Credentials {
   userName: string;

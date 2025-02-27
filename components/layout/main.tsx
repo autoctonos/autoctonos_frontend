@@ -2,11 +2,14 @@ import { Link } from "@heroui/link";
 import { Navbar } from "../navbar";
 import { TwitterIcon } from "../icons";
 import { siteConfig } from "@/config/site";
+import { Suspense } from "react";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
     return (
         <div className="relative flex flex-col h-screen">
-            <Navbar />
+            <Suspense fallback={<p>Cargando...</p>}>
+                <Navbar />
+            </Suspense>
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
                 {children}
             </main>
@@ -21,9 +24,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                     <p className="text-primary">Autóctonos</p>
                 </Link>
                 <div className="flex items-center gap-1">
-                <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
-                    <TwitterIcon className="text-default-500" />
-                </Link>
+                    <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
+                        <TwitterIcon className="text-default-500" />
+                    </Link>
                 </div>
             </footer>
         </div>

@@ -46,7 +46,7 @@ export default function LoginPage() {
               removeWrapper
               alt="Card background"
               className="z-0 w-full h-full object-cover"
-              src="https://www.mammaproof.org/madrid/wp-content/uploads/sites/9/2016/10/kiki_market_4-1180x787.jpg"
+              src="login.webp"
             />
           </Card>
 

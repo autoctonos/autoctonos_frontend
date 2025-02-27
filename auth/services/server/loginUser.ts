@@ -6,7 +6,7 @@ interface Credentials {
 const backendUrl = process.env.BACKEND_URL || "";
 export async function loginUser(credentials: Credentials) {
   try {
-    const authResponse = await fetch(`${backendUrl}/api/token/`, {
+    const authResponse = await fetch(`${backendUrl}/token/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
