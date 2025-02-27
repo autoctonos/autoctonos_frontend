@@ -1,3 +1,4 @@
+"use client"
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -14,15 +15,15 @@ import { Input } from "@heroui/input";
 import { link as linkStyles } from "@heroui/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
-
 import { siteConfig } from "@/config/site";
 
 import {
   HeartFilledIcon,
   SearchIcon,
   Logo,
-  UserIcon,
 } from "@/components/icons";
+import Drop from "@/components/common/dropdown";
+import ShopSiderBar from "@/components/common/shop-sidebar";
 
 export const Navbar = () => {
   const searchInput = (
@@ -48,7 +49,7 @@ export const Navbar = () => {
 
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
+      <NavbarContent className="basis-1/4 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
@@ -71,6 +72,11 @@ export const Navbar = () => {
             </NavbarItem>
           ))}
         </ul>
+        <NavbarItem>
+          <ul className="hidden lg:flex">
+            <Drop title="categorias" />
+          </ul>
+        </ NavbarItem>
 
       </NavbarContent>
 
@@ -92,15 +98,7 @@ export const Navbar = () => {
         </NavbarItem>
 
         <NavbarItem className="hidden md:flex">
-          <NextLink href="/login">
-            <Button
-              className="text-sm font-normal text-default-600 bg-default-100"
-              startContent={<UserIcon className="text-default-500" />}
-              variant="flat"
-            >
-              Login
-            </Button>
-          </NextLink>
+            <ShopSiderBar />
         </NavbarItem>
       </NavbarContent>
 
