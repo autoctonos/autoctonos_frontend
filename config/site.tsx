@@ -12,11 +12,6 @@ export const siteConfig = {
       label: "¿Cómo funciona?",
       href: "/docs",
     },
-    {
-      label: "Categorías",
-      href: "/pricing",
-    },
-
 
   ],
   navMenuItems: [
