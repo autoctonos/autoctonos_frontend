@@ -205,3 +205,28 @@ export const UserIcon: React.FC<IconSvgProps> = ({
     />
   </svg>
 );
+
+export const CartIcon: React.FC<IconSvgProps> = ({
+  size = 24,
+  width,
+  height,
+  ...props
+}) => (
+  <svg
+    fill="none"
+    height={size || height}
+    viewBox="0 0 24 24"
+    width={size || width}
+    {...props}
+  >
+    <path
+      d="M3 3h2l3.6 9.6c.2.5.7.8 1.2.8h7.8c.5 0 1-.3 1.2-.8L21 6H5"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <circle cx="9" cy="20" r="1.5" fill="currentColor" />
+    <circle cx="18" cy="20" r="1.5" fill="currentColor" />
+  </svg>
+);

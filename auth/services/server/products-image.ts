@@ -1,9 +1,9 @@
 "use server";
 const backendUrl = process.env.BACKEND_URL || "";
 
-export const getProducts = async () => {
+export const getProductsImages = async () => {
     try {
-        const response = await fetch(`${backendUrl}/productos/`, {
+        const response = await fetch(`${backendUrl}/productos/productos-con-imagenes/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -18,6 +18,7 @@ export const getProducts = async () => {
         return { success: true, data };
 
     } catch (error) {
-        return { success: false, message: error.message };
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido";
+        return { success: false, message: errorMessage };
     }
 };
