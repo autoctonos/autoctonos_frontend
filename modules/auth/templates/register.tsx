@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { Divider } from "@heroui/divider";
 import { Progress } from "@heroui/progress";
 import LabelInput from "@/components/common/label-input";
-import { registerUser } from "@/auth/services/registerUser";
+import { registerUser } from "@/auth/services/server/registerUser";
 
 export default function LoginPage() {
 
