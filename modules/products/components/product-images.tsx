@@ -16,7 +16,7 @@ export default function ProductImages({
   };
 
   return (
-    <div className="flex gap-4 mt-4">
+    <div className="flex items-center justify-center w-full h-full gap-4 mt-4 border">
       {images.map((img) => (
         <Image
           key={img.id_imagen}

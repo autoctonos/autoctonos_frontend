@@ -21,9 +21,8 @@ export default function ProductPriceAndActions({
   };
 
   return (
-    <div className="mt-4">
-      <p className="text-lg font-semibold">${price}</p>
-
+    <div className="flex flex-col items-center justify-center h-4/6 mt-4 border rounded-3xl gap-1 p-5">
+      <p className="text-lg font-semibold">Precio ${price}</p>
       <p className="text-sm text-gray-600">
         Stock disponible: {stock} {stock === 1 ? "unidad" : "unidades"}
       </p>
