@@ -1,5 +1,4 @@
 import ProductImages from "../components/product-images";
-import ProductPrice from "../components/product-price";
 import ProductDescription from "../components/product-description";
 import ProductActions from "../components/product-actions";
 
@@ -15,7 +14,7 @@ export default function ProductTemplate({ product }: { product: any }) {
           />
         )}
         <div className="flex flex-col h-auto w-2/6 gap-5">
-          <ProductActions price={product.precio} stock={product.stock} />
+          <ProductActions price={product.precio} stock={product.stock} productId={product.id} />
           <ProductDescription description={product.descripcion} />
         </div>
       </div>

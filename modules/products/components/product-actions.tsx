@@ -4,9 +4,11 @@ import { useState } from "react";
 export default function ProductPriceAndActions({
   price,
   stock,
+  productId,
 }: {
   price: number;
   stock: number;
+  productId: string;
 }) {
   const [quantity, setQuantity] = useState(1);
 
@@ -16,8 +18,9 @@ export default function ProductPriceAndActions({
   }
 
   const handleAddToCart = () => {
-    // Logica para agregar al carrito
-    console.log("Agregado al carrito:", { quantity });
+    // Lógica para agregar al carrito
+    const newItem = { productId, quantity };
+    console.log("Agregado al carrito:", newItem);
   };
 
   return (

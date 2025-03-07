@@ -2,10 +2,6 @@ import { Navbar } from "@/components/navbar";
 import ProductTemplate from "@/modules/products/templates";
 import { getProductDetail } from "@/auth/services/server/product-detail";
 
-function getProductId(params: { id: string }) {
-  return parseInt(params.id);
-}
-
 export default async function ProductPage({
   params,
 }: {
