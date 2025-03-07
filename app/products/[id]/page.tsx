@@ -1,11 +1,30 @@
 import { Navbar } from "@/components/navbar";
 import ProductTemplate from "@/modules/products/templates";
+import { getProductDetail } from "@/auth/services/server/product-detail";
 
-export default function ProductPage() {
+function getProductId(params: { id: string }) {
+  return parseInt(params.id);
+}
+
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const productId = params.id;
+
+  console.log("Product ID:", productId);
+
+  const { success, data, message } = await getProductDetail(productId);
+
+  if (!success) {
+    return <p className="text-red-500">Error: {message}</p>;
+  }
+
   return (
     <section>
       <Navbar />
-      <ProductTemplate />
+      <ProductTemplate product={data} />
     </section>
   );
 }
