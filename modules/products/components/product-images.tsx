@@ -1,6 +1,6 @@
 "use client";
-import Image from "next/image";
-import { useState } from "react";
+
+import ImageCarousel from "./product-carousel";
 
 export default function ProductImages({
   images,
@@ -9,25 +9,10 @@ export default function ProductImages({
   images: any[];
   productName: string;
 }) {
-  const [fallbackImage, setFallbackImage] = useState<string | null>(null);
+  const decodedImages = images.map((img) => ({
+    ...img,
+    url_imagen: decodeURIComponent(img.url_imagen.replace(/^\/media\//, "")),
+  }));
 
-  const handleImageError = () => {
-    setFallbackImage("/respaldo.png");
-  };
-
-  return (
-    <div className="flex items-center justify-center w-full h-full gap-4 mt-4 border">
-      {images.map((img) => (
-        <Image
-          key={img.id_imagen}
-          src={fallbackImage || img.url_imagen}
-          alt={productName}
-          width={800}
-          height={800}
-          className="rounded-lg"
-          onError={handleImageError}
-        />
-      ))}
-    </div>
-  );
+  return <ImageCarousel images={decodedImages} productName={productName} />;
 }

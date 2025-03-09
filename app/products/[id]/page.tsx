@@ -6,8 +6,6 @@ export default async function ProductPage({ params }: { params: { id: string }})
   const { id } = await params;
   const productId = id;
 
-  console.log("Product ID:", productId);
-
   const { success, data, message } = await getProductDetail(productId);
 
   if (!success) {
