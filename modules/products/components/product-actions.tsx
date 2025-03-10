@@ -18,9 +18,8 @@ export default function ProductPriceAndActions({
   }
 
   const handleAddToCart = () => {
-    // Lógica para agregar al carrito
     const newItem = { productId, quantity };
-    console.log("Agregado al carrito:", newItem);
+    alert(`Producto agregado: ${JSON.stringify(newItem)}`);
   };
 
   return (
