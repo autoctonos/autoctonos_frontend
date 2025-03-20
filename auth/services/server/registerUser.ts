@@ -5,7 +5,7 @@ const backendUrl = process.env.BACKEND_URL || "";
 
 export const registerUser = async (formData: RegisterFormData) => {
     try {
-        const response = await fetch(`${backendUrl}/users/`, {
+        const response = await fetch(`${backendUrl}/users/users/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -21,6 +21,7 @@ export const registerUser = async (formData: RegisterFormData) => {
 
         return { success: true, data };
     } catch (error) {
-        return { success: false, message: error.message };
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido";
+        return { success: false, message: errorMessage };
     }
 };
