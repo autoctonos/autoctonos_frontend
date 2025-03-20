@@ -19,6 +19,7 @@
     "@heroui/progress": "^2.2.10",
     "@heroui/react": "^2.7.2",
     "@heroui/theme": "^2.4.9",
+    "@internationalized/date": "^3.7.0",
     "embla-carousel-react": "^8.5.2",
     "next": "^15.1.7",
     "next-auth": "^4.24.11",
