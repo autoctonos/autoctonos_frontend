@@ -11,9 +11,10 @@ export const sessionCallback = async ({
   if (session.user) {
     session.user.id = token.id as string;
     session.user.userName = token.userName as string;
+    session.user.firstName = token.firstName as string;
   }
 
-  (session as any).accessToken = token.accessToken as string | undefined;
+  (session as any).access_token = token.access_token as string | undefined;
 
   return session;
 };
