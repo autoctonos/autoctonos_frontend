@@ -12,7 +12,6 @@ import { createPost } from "@/auth/services/server/products";
 
 export default function SellProductPage() {
     const { data: session, status } = useSession();
-    console.log(session?.user?.id);
     const [form, setForm] = useState({
         id_usuario: session?.user?.id ?? 0,
         nombre: "",
