@@ -29,7 +29,6 @@ const formatDate = (dateString: string | number | Date) => {
 };
 
 export default function ProductosCards({ data: productos }: ProductosCardsProps) {
-    console.log(productos);
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
