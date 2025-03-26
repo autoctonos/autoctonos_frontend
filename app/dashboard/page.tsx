@@ -54,6 +54,7 @@ export default function DashboardPage() {
                                 <div className="mb-6 flex gap-4">
                                     <Chip color="success" className="mb-2">Aprobado</Chip>
                                     <Chip color="danger" className="mb-2">Rechazado</Chip>
+                                    <Chip color="warning" className="mb-2">Revisión</Chip>
                                 </div>
 
                                 <h3 className="text-xl font-medium mb-3">¿Cómo interpretar los estados?</h3>
@@ -63,6 +64,9 @@ export default function DashboardPage() {
                                     </li>
                                     <li>
                                         <strong>Rechazado:</strong> Tu producto no cumple con nuestros criterios. Junto al estado, encontrarás una explicación detallada del motivo del rechazo.
+                                    </li>
+                                    <li>
+                                        <strong>Revisión:</strong> Tu producto se encuentra en revisión.
                                     </li>
                                 </ul>
 
@@ -80,7 +84,7 @@ export default function DashboardPage() {
                                     </p>
                                 </div>
 
-                                <div className="border rounded-lg p-4">
+                                <div className="border rounded-lg p-4 mb-6">
                                     <div className="flex items-center justify-between mb-3">
                                         <div>
                                             <h4 className="font-medium">Vino</h4>
@@ -90,6 +94,19 @@ export default function DashboardPage() {
                                     </div>
                                     <p className="text-sm">
                                         Motivo: Las imágenes no muestran claramente el producto. Por favor, sube fotos de mejor calidad que muestren el producto desde diferentes ángulos.
+                                    </p>
+                                </div>
+
+                                 <div className="border rounded-lg p-4">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <div>
+                                            <h4 className="font-medium">Queso</h4>
+                                            <p className="text-sm text-gray-500">Subido el: 01/04/2025</p>
+                                        </div>
+                                        <Chip color="warning">Revisión</Chip>
+                                    </div>
+                                    <p className="text-sm">
+                                        Comentario: Tu producto se encuentra en revisión.
                                     </p>
                                 </div>
                             </CardBody>
