@@ -4,7 +4,6 @@ import {
   NavbarContent,
   NavbarItem,
   Link,
-  Input,
   DropdownItem,
   DropdownTrigger,
   Dropdown,
@@ -12,8 +11,10 @@ import {
   Avatar,
 } from "@heroui/react";
 import LogoutButton from "../auth/logoutButton";
+import { useSession } from "next-auth/react";
 
 export default function NavbarProductors() {
+  const { data: session, status } = useSession();
   return (
     <Navbar isBordered>
       <NavbarContent justify="center">
@@ -50,8 +51,8 @@ export default function NavbarProductors() {
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+              <p className="font-semibold">Hola!</p>
+              <p className="font-semibold">{session?.user.firstName}</p>
             </DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
             <DropdownItem key="logout" color="danger">
