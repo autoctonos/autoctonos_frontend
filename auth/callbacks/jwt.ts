@@ -11,6 +11,9 @@ export const jwtCallback = async ({
   if (user) {
     token.id = user.id;
     token.userName = user.userName;
+    token.firstName = user.firstName;
+    token.access_token = (user as any).access_token;
+    token.refresh_token = (user as any).refresh_token;
   }
   return token;
 };

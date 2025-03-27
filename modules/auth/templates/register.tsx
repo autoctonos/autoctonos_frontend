@@ -52,7 +52,7 @@ export default function LoginPage() {
        const result = await registerUser(formData);
 
         if (!result.success) {
-            setError(result.message);
+            setError(result?.message || "Ocurrió un error inesperado.");
         } else {
             router.push("/");
         }
@@ -60,7 +60,6 @@ export default function LoginPage() {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(formData);
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -134,7 +133,7 @@ export default function LoginPage() {
                                         <LabelInput
                                             label="Nombre de usuario"
                                             name="username"
-                                            placeholder="Username"
+                                            placeholder="Nombre de usuario"
                                             value={formData.username}
                                             onChange={handleChange}
                                             required
@@ -186,7 +185,6 @@ export default function LoginPage() {
                                         </div>
                                     </form>
                                 )}
-
                                 <p className="text-center text-sm text-gray-500 mt-4">
                                     ¿Ya tienes una cuenta? <a href="/login" className="text-primary">Inicia sesión</a>
                                 </p>
@@ -194,8 +192,6 @@ export default function LoginPage() {
                         </Card>
                     </div>
                     <Card className="max-w-sm shadow-lg hidden sm:flex">
-                        <CardHeader className="absolute">
-                        </CardHeader>
                         <Image
                             removeWrapper
                             alt="Card background"

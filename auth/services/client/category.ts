@@ -1,10 +1,10 @@
 import useSWR from "swr";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND; 
+const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND;
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export function useFetchData(endpoint) {
+export function useFetchData(endpoint: string) {
   const url = `${API_BASE_URL}/${endpoint}/`;
   const { data, error, isLoading } = useSWR(url, fetcher);
 

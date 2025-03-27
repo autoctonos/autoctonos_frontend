@@ -14,7 +14,7 @@ export const getCategory = async () => {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message || "Error al obtener productos.");
+            throw new Error(data.message || "Error al obtener categorias.");
         }
         return { success: true, data };
 
