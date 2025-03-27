@@ -8,7 +8,6 @@ export default function SolicitudesPage() {
     const { data: session, status } = useSession();
 
     const userId = parseInt(session?.user?.id ?? "0");
-    console.log(userId)
     const { data, error, isLoading } = useFetchDataById("productos/posts/", userId);
 
     if (status === "loading" || isLoading) return <p>Loading...</p>;
