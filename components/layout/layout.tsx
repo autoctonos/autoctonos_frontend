@@ -1,5 +1,4 @@
 import { Link } from "@heroui/link";
-import { Navbar } from "../navbar";
 import { TwitterIcon } from "../icons";
 import { siteConfig } from "@/config/site";
 
