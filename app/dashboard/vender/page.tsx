@@ -59,7 +59,6 @@ export default function SellProductPage() {
         } else {
             setMessage(result.message);
         }
-        console.log(form)
     };
 
     return (
