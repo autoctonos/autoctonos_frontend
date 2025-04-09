@@ -49,6 +49,7 @@ export default function ImageCarousel({
                 className="min-w-full flex justify-center"
                 key={img.id_imagen}
               >
+                
                 <Image
                   src={fallbackImage || img.url_imagen}
                   alt={productName}
@@ -86,7 +87,7 @@ export default function ImageCarousel({
           <button
             key={img.id_imagen}
             className={`border-2 rounded-lg overflow-hidden ${
-              selectedIndex === index ? "border-blue-500" : "border-transparent"
+              selectedIndex === index ? "border-custom-red" : "border-transparent"
             }`}
             onClick={() => handleThumbnailClick(index)}
           >
