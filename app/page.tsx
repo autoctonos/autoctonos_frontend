@@ -6,6 +6,7 @@ import ProductsList from "@/components/product-list";
 import { getProductsImages } from "@/auth/services/server/products-image";
 import CategoryList from "@/components/category-list";
 import { getCategory } from "@/auth/services/server/category";
+import Image from "next/image"
 
 export default async function Home() {
   const { success, data, message } = await getProductsImages();
@@ -22,14 +23,20 @@ export default async function Home() {
   return (
     <MainLayout>
       <section className="flex flex-col items-center justify-center gap-5 py-8 md:py-10">
+      <Image src="/logo.svg"
+            alt="logo"
+            height={300}
+            width={300}
+          />
         <div className="inline-block max-w-xl text-center justify-center">
           <span className={title()}>Compra y vende&nbsp;</span>
-          <span className={title({ color: "green" })}>productos&nbsp;</span>
+          <span className={title({ color: "pink" })}>productos&nbsp;</span>
           <br />
           <span className={title()}>artesanales locales</span>
           <div className={subtitle({ class: "mt-4" })}>
             El marketplace donde la tradición y la calidad se encuentran
           </div>
+          
         </div>
       </section>
       <section className="container mx-auto px-4 py-6">
@@ -43,7 +50,7 @@ export default async function Home() {
         <h2 className={subtitle({ class: "mb-4 text-xl font-semibold" })}>
           Categorías
         </h2>
-        <CategoryList categories={categories}/>
+        <CategoryList categories={categories} />
       </section>
     </MainLayout>
   );

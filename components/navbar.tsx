@@ -16,11 +16,12 @@ import { link as linkStyles } from "@heroui/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
 import { siteConfig } from "@/config/site";
+import Image from "next/image";
+
 
 import {
   HeartFilledIcon,
   SearchIcon,
-  Logo,
 } from "@/components/icons";
 import Drop from "@/components/common/dropdown";
 import ShopSiderBar from "@/components/common/shop-sidebar";
@@ -30,30 +31,33 @@ export const Navbar = () => {
     <Input
       aria-label="Search"
       classNames={{
-        inputWrapper: "bg-default-100 w-full",
-        input: "text-sm",
+        inputWrapper: "bg-custom-cream bg-opacity-60 w-full border-custom-medium-green",
+        input: "text-sm text-custom-black",
       }}
       endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
+        <Kbd className="hidden lg:inline-block bg-custom-medium-green text-custom-cream" keys={["command"]}>
           K
         </Kbd>
       }
       labelPlacement="outside"
       placeholder="Encuentra tu proxímo producto..."
       startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+        <SearchIcon className="text-base text-custom-medium-green pointer-events-none flex-shrink-0" />
       }
       type="search"
     />
   );
 
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
+    <HeroUINavbar maxWidth="xl" position="sticky" className="bg-custom-cream bg-opacity-80 border-b border-custom-medium-green">
       <NavbarContent className="basis-1/4 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">Autóctonos</p>
+            <Image src="/logo.svg"
+              alt="logo"
+              height={70}
+              width={70}
+            />
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
@@ -74,7 +78,7 @@ export const Navbar = () => {
         </ul>
         <NavbarItem>
           <ul className="hidden lg:flex">
-            <Drop title="categorias" />
+            <Drop title="Categorias" />
           </ul>
         </ NavbarItem>
 
@@ -88,8 +92,8 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <NextLink href="/producers">
             <Button
-              className="text-sm font-normal text-default-600 bg-default-100"
-              startContent={<HeartFilledIcon className="text-danger" />}
+              className="text-sm font-normal text-custom-cream bg-custom-dark-green hover:bg-custom-medium-green"
+              startContent={<HeartFilledIcon className="text-custom-red" />}
               variant="flat"
             >
               Nuestros Productores
@@ -98,15 +102,15 @@ export const Navbar = () => {
         </NavbarItem>
 
         <NavbarItem className="hidden md:flex">
-            <ShopSiderBar />
+          <ShopSiderBar />
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <NavbarMenuToggle />
+        <NavbarMenuToggle className="text-custom-dark-green" />
       </NavbarContent>
 
-      <NavbarMenu>
+      <NavbarMenu className="bg-custom-cream bg-opacity-95">
         {searchInput}
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
@@ -121,6 +125,7 @@ export const Navbar = () => {
                 }
                 href="#"
                 size="lg"
+                className="text-custom-dark-green hover:text-custom-medium-green"
               >
                 {item.label}
               </Link>

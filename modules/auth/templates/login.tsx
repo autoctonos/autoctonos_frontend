@@ -38,10 +38,8 @@ export default function LoginPage() {
   return (
     <Layout>
       <section className="fixed inset-0 flex justify-center items-center">
-        <div className="flex gap-1">
-          <Card className="w-full max-w-sm shadow-lg flex justify-center items-center hidden sm:flex">
-            <CardHeader className="absolute z-10 top-1 flex-col">
-            </CardHeader>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Card className="w-full max-w-sm h-[500px] shadow-lg hidden sm:flex">
             <Image
               removeWrapper
               alt="Card background"
@@ -50,39 +48,36 @@ export default function LoginPage() {
             />
           </Card>
 
-          <div className="w-full lg:w-1/2 flex justify-center items-center p-6">
-            <Card className="w-full max-w-sm shadow-lg">
-              <CardHeader className="text-center">
-                <h1 className="text-gray-500 text-sm">
-                  Bienvenido a Autóctonos, por favor ingresa tus datos de inicio de sesión.
-                </h1>
-              </CardHeader>
-              <CardBody>
-                <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-                  <Input type="username" placeholder="username" className="border border-gray-300 rounded-md px-3 py-2" value={userName}
-                    onChange={(e) => setUserName(e.target.value)} required />
-                  <Input type="password" placeholder="contraseña" className="border border-gray-300 rounded-md px-3 py-2" value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required />
-                  <a href="#" className="text-sm text-right">¿Olvidaste tu contraseña?</a>
-                  <Button color="primary" type="submit" isLoading={isLoading} className="w-full">
-                    Iniciar sesión
-                  </Button>
-                </form>
-
-                <div className="text-center my-4 text-gray-500">O</div>
-
-                <Button variant="faded" className="w-full flex items-center justify-center gap-2 py-2">
-                  <FcGoogle className="text-lg" />
-                  Iniciar sesión con Google
+          <Card className="w-full max-w-sm h-[500px] shadow-lg flex flex-col justify-center p-2">
+            <CardHeader className="text-center">
+              <h1 className="text-gray-500 text-sm">
+                Bienvenido a Autóctonos, por favor ingresa tus datos de inicio de sesión.
+              </h1>
+            </CardHeader>
+            <CardBody className="flex flex-col justify-center">
+              <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                <Input type="text" placeholder="username" className="border border-gray-300 rounded-md px-3 py-2" value={userName}
+                  onChange={(e) => setUserName(e.target.value)} required />
+                <Input type="password" placeholder="contraseña" className="border border-gray-300 rounded-md px-3 py-2" value={password}
+                  onChange={(e) => setPassword(e.target.value)} required />
+                <a href="#" className="text-sm text-center">¿Olvidaste tu contraseña?</a>
+                <Button type="submit" isLoading={isLoading} className="w-full bg-custom-red text-white">
+                  Iniciar sesión
                 </Button>
+              </form>
 
-                <p className="text-center text-sm text-gray-500 mt-4">
-                  ¿No tienes una cuenta? <a href="/register" className="text-primary">Regístrate</a>
-                </p>
-              </CardBody>
-            </Card>
-          </div>
+              <div className="text-center my-4 text-gray-500">O</div>
+
+              <Button variant="faded" className="w-full flex items-center justify-center gap-2 py-2">
+                <FcGoogle className="text-lg" />
+                Iniciar sesión con Google
+              </Button>
+
+              <p className="text-center text-sm text-gray-500 mt-4">
+                ¿No tienes una cuenta? <a href="/register" className="text-custom-red">Regístrate</a>
+              </p>
+            </CardBody>
+          </Card>
         </div>
       </section>
     </Layout>

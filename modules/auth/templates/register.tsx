@@ -118,7 +118,7 @@ export default function LoginPage() {
                                             required
                                         />
 
-                                        <Button onPress={() => setStep(2)} className="w-full mt-3 rounded-lg py-3 shadow-md" color="primary">
+                                        <Button onPress={() => setStep(2)} className="w-full mt-3 rounded-lg py-3 shadow-md bg-custom-red text-white">
                                             Siguiente
                                         </Button>
                                         <div className="text-center my-4 text-gray-500">O</div>
@@ -126,7 +126,7 @@ export default function LoginPage() {
                                             <FcGoogle className="text-lg" />
                                             Registrarse con Google
                                         </Button>
-                                        <Progress aria-label="Loading..." className="max-w-md" size="sm" value={50} />
+                                        <Progress color="danger" aria-label="Loading..." className="max-w-md" size="sm" value={50} />
                                     </form>
                                 ) : (
                                     <form className="flex flex-col gap-3" onSubmit={handleRegisterSubmit}>
@@ -178,15 +178,15 @@ export default function LoginPage() {
                                                 Atrás
                                             </Button>
                                             <Divider />
-                                            <Button color="primary" type="submit" isLoading={isLoading} className="w-full">
+                                            <Button type="submit" isLoading={isLoading} className="w-full bg-custom-red text-white">
                                                 Registrarse
                                             </Button>
-                                            <Progress aria-label="Loading..." className="max-w-md" size="sm" value={90} />
+                                            <Progress color="danger" aria-label="Loading..." className="max-w-md" size="sm" value={90} />
                                         </div>
                                     </form>
                                 )}
                                 <p className="text-center text-sm text-gray-500 mt-4">
-                                    ¿Ya tienes una cuenta? <a href="/login" className="text-primary">Inicia sesión</a>
+                                    ¿Ya tienes una cuenta? <a href="/login" className="text-custom-red">Inicia sesión</a>
                                 </p>
                             </CardBody>
                         </Card>

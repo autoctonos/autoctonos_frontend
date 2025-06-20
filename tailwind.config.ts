@@ -14,6 +14,14 @@ module.exports = {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
       },
+      colors: {
+        'custom-red': '#BC4749',
+        'custom-light-green': '#A7C957',
+        'custom-medium-green': '#6A994E',
+        'custom-dark-green': '#386641',
+        'custom-cream': '#F2E8CF',
+        'custom-black': '#111111',
+      }
     },
   },
   darkMode: "class",

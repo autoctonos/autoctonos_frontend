@@ -14,7 +14,7 @@ import { CartIcon } from "@/components/icons";
   
     return (
       <>
-        <Button className="text-sm font-normal text-default-600 bg-default-100" onPress={onOpen} startContent={<CartIcon className="text-gray-500" />}>Carrito</Button>
+        <Button className="bg-custom-green text-sm font-normal text-custom-cream bg-custom-dark-green" onPress={onOpen} startContent={<CartIcon className="text-custom-red" />}>Carrito</Button>
         <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
           <DrawerContent>
             {(onClose) => (
