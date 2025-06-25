@@ -1,17 +1,20 @@
 "use client";
 import { useState } from "react";
-import {NumberInput} from "@heroui/react";
+import { useCart } from "../../../app/contexts/CartContext";
 
 export default function ProductPriceAndActions({
   price,
   stock,
   productId,
+  productName,
 }: {
   price: number;
   stock: number;
   productId: string;
+  productName: string;
 }) {
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
 
   const quantityOptions = [];
   for (let i = 1; i <= stock; i++) {
@@ -19,8 +22,8 @@ export default function ProductPriceAndActions({
   }
 
   const handleAddToCart = () => {
-    const newItem = { productId, quantity };
-    alert(`Producto agregado: ${JSON.stringify(newItem)}`);
+    const newItem = { productId, quantity, price, productName};
+    addToCart(newItem);
   };
 
   return (
