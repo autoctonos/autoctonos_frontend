@@ -4,7 +4,7 @@ import * as React from "react";
 import { HeroUIProvider } from "@heroui/system";
 import { useRouter } from "next/navigation";
 import AuthProvider from "@/components/session/sessionProvider";
-import { CartProvider } from "../app/contexts/CartContext";
+import { CartProvider } from '@/contexts/cart-context';
 
 export interface ProvidersProps {
   children: React.ReactNode;

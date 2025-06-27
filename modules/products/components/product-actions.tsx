@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useCart } from "../../../app/contexts/CartContext";
+import { useCart } from '@/contexts/cart-context';
 
 export default function ProductPriceAndActions({
   price,

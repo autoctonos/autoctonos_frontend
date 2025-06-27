@@ -8,7 +8,7 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { CartIcon } from "@/components/icons";
-import { useCart } from "../../app/contexts/CartContext";
+import { useCart } from '@/contexts/cart-context';
 
 export default function ShopSiderBar() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -86,7 +86,7 @@ export default function ShopSiderBar() {
                   ))
                 )}
               </DrawerBody>
-              
+
               {cartItems.length > 0 && (
                 <DrawerFooter className="flex justify-between items-center border-t pt-4">
                   <Button color="danger" variant="light" onPress={onClose}>
