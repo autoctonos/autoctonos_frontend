@@ -4,6 +4,7 @@ import * as React from "react";
 import { HeroUIProvider } from "@heroui/system";
 import { useRouter } from "next/navigation";
 import AuthProvider from "@/components/session/sessionProvider";
+import { CartProvider } from '@/contexts/cart-context';
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -23,7 +24,7 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <AuthProvider>
       <HeroUIProvider navigate={router.push}>
-        {children}
+        <CartProvider>{children}</CartProvider>
       </HeroUIProvider>
     </AuthProvider>
   );

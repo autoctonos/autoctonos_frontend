@@ -25,7 +25,7 @@ export default function LoginPage() {
         address: ""
     });
 
-    const [step, setStep] = useState(1);
+    const [steep , setSteep ] = useState(1);
     const [error, setError] = useState("");
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
@@ -75,7 +75,7 @@ export default function LoginPage() {
                                         Bienvenido a Autóctonos, por favor ingresa tus datos para crear tu cuenta.
                                     </h1>
                                 </CardHeader>
-                                {step === 1 ? (
+                                {steep === 1 ? (
                                     <form className="flex flex-col gap-3">
                                         <LabelInput
                                             label="Primer Nombre"
@@ -118,7 +118,7 @@ export default function LoginPage() {
                                             required
                                         />
 
-                                        <Button onPress={() => setStep(2)} className="w-full mt-3 rounded-lg py-3 shadow-md bg-custom-red text-white">
+                                        <Button onPress={() => setSteep(2)} className="w-full mt-3 rounded-lg py-3 shadow-md bg-custom-red text-white">
                                             Siguiente
                                         </Button>
                                         <div className="text-center my-4 text-gray-500">O</div>
@@ -174,7 +174,7 @@ export default function LoginPage() {
                                         />
                                         {error && <p className="text-red-500 text-sm text-center mt-2">{error}</p>}
                                         <div className="flex flex-col gap-3 justify-between">
-                                            <Button onPress={() => setStep(1)} className="rounded-lg py-3 shadow-md">
+                                            <Button onPress={() => setSteep(1)} className="rounded-lg py-3 shadow-md">
                                                 Atrás
                                             </Button>
                                             <Divider />

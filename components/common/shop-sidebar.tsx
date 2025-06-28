@@ -1,57 +1,106 @@
 import {
-    Drawer,
-    DrawerContent,
-    DrawerHeader,
-    DrawerBody,
-    DrawerFooter,
-    Button,
-    useDisclosure,
-  } from "@heroui/react";
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
+  Button,
+  useDisclosure,
+} from "@heroui/react";
 import { CartIcon } from "@/components/icons";
-  
-  export default function ShopSiderBar() {
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  
-    return (
-      <>
-        <Button className="bg-custom-green text-sm font-normal text-custom-cream bg-custom-dark-green" onPress={onOpen} startContent={<CartIcon className="text-custom-red" />}>Carrito</Button>
-        <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
-          <DrawerContent>
-            {(onClose) => (
-              <>
-                <DrawerHeader className="flex flex-col gap-1">Carrito</DrawerHeader>
-                <DrawerBody>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus non
-                    risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed porttitor
-                    quam.
+import { useCart } from '@/contexts/cart-context';
+
+export default function ShopSiderBar() {
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const { cartItems, incrementItem, decrementItem, removeItem } = useCart();
+
+  return (
+    <>
+      <Button className="bg-custom-dark-green text-custom-cream hover:bg-custom-green transition"
+        onPress={onOpen}
+        startContent={<CartIcon className="text-custom-red" />}
+      >
+        Carrito ({cartItems.length})
+      </Button>
+
+      <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+        <DrawerContent>
+          {(onClose) => (
+            <>
+              <DrawerBody className="space-y-4">
+                {cartItems.length === 0 ? (
+                  <p className="text-gray-500 text-center mt-8">
+                    Tu carrito está vacío.
                   </p>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus non
-                    risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed porttitor
-                    quam.
-                  </p>
-                  <p>
-                    Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit dolor
-                    adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis. Velit duis sit
-                    officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                    nisi consectetur esse laborum eiusmod pariatur proident Lorem eiusmod et. Culpa
-                    deserunt nostrud ad veniam.
-                  </p>
-                </DrawerBody>
-                <DrawerFooter>
+                ) : (
+                  cartItems.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex gap-4 items-center border-b pb-4"
+                    >
+                      <div className="w-20 h-20 rounded overflow-hidden border">
+
+                      </div>
+
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-base">
+                          {item.productName}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          Precio: ${item.price}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          Subtotal: ${(item.quantity * item.price).toFixed(2)}
+                        </p>
+
+                        <div className="flex items-center mt-2 gap-2">
+                          <Button
+                            size="sm"
+                            variant="flat"
+                            onPress={() => decrementItem(item.productId)}
+                          >
+                            -
+                          </Button>
+                          <span className="text-base font-medium">
+                            {item.quantity}
+                          </span>
+                          <Button
+                            size="sm"
+                            variant="flat"
+                            onPress={() => incrementItem(item.productId)}
+                          >
+                            +
+                          </Button>
+                          <Button
+                            isIconOnly
+                            size="sm"
+                            variant="light"
+                            color="danger"
+                            onPress={() => removeItem(item.productId)}
+                          >
+                            X
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </DrawerBody>
+
+              {cartItems.length > 0 && (
+                <DrawerFooter className="flex justify-between items-center border-t pt-4">
                   <Button color="danger" variant="light" onPress={onClose}>
-                    Close
+                    Cerrar
                   </Button>
-                  <Button color="primary" onPress={onClose}>
-                    Action
+                  <Button color="primary" onPress={() => alert("Ir al pago")}>
+                    Ir a pagar
                   </Button>
                 </DrawerFooter>
-              </>
-            )}
-          </DrawerContent>
-        </Drawer>
-      </>
-    );
-  }
-  
+              )}
+            </>
+          )}
+        </DrawerContent>
+      </Drawer>
+    </>
+  );
+}
