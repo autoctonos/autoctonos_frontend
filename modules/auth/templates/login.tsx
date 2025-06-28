@@ -37,7 +37,7 @@ export default function LoginPage() {
 
   return (
     <Layout>
-      <section className="fixed inset-0 flex justify-center items-center">
+      <section className="flex flex-col items-center justify-center flex-1 p-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <Card className="w-full max-w-sm h-[500px] shadow-lg hidden sm:flex">
             <Image
