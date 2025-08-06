@@ -9,6 +9,7 @@ import {
 } from "@heroui/react";
 import { CartIcon } from "@/components/icons";
 import { useCart } from '@/contexts/cart-context';
+import Link from "next/link";
 
 export default function ShopSiderBar() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -92,9 +93,11 @@ export default function ShopSiderBar() {
                   <Button color="danger" variant="light" onPress={onClose}>
                     Cerrar
                   </Button>
-                  <Button color="primary" onPress={() => alert("Ir al pago")}>
-                    Ir a pagar
-                  </Button>
+                  <Link href="/checkout/shipping" passHref legacyBehavior>
+                    <Button color="primary">
+                      Ir a pagar
+                    </Button>
+                  </Link>
                 </DrawerFooter>
               )}
             </>
