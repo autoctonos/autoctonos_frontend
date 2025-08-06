@@ -21,6 +21,7 @@
     "@heroui/theme": "^2.4.9",
     "@internationalized/date": "^3.7.0",
     "embla-carousel-react": "^8.5.2",
+    "lucide-react": "^0.511.0",
     "next": "^15.2.4",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",

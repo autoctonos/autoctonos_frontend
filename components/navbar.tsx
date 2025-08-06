@@ -34,11 +34,6 @@ export const Navbar = () => {
         inputWrapper: "bg-custom-cream bg-opacity-60 w-full border-custom-medium-green",
         input: "text-sm text-custom-black",
       }}
-      endContent={
-        <Kbd className="hidden lg:inline-block bg-custom-medium-green text-custom-cream" keys={["command"]}>
-          K
-        </Kbd>
-      }
       labelPlacement="outside"
       placeholder="Encuentra tu proxímo producto..."
       startContent={
