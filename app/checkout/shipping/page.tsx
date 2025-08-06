@@ -3,6 +3,7 @@
 import Layout from "@/components/layout/layout"
 import { useState } from "react"
 import { Input, Button, Form } from "@heroui/react"
+import { useCart } from "@/contexts/cart-context";
 
 export default function ShippingPage() {
   const [formData, setFormData] = useState({
@@ -49,13 +50,19 @@ export default function ShippingPage() {
       const input = document.createElement("input")
       input.type = "hidden"
       input.name = key
-      input.value = value
+      input.value = String(value)
       form.appendChild(input)
     })
 
     document.body.appendChild(form)
     form.submit()
   }
+
+  const { cartItems } = useCart();
+
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const shipping = 5000;
+  const total = subtotal + shipping;
 
   return (
     <Layout>
@@ -100,22 +107,20 @@ export default function ShippingPage() {
           <div className="space-y-4">
             <h2 className="text-xl font-semibold text-custom-dark-green">Resumen</h2>
             <div className="bg-white shadow rounded-lg p-6 space-y-4">
-              <div className="flex justify-between text-sm">
-                <span>Queso de cabra</span>
-                <span>$30.000</span>
+              {cartItems.map((item) => (
+              <div key={item.productId} className="flex justify-between text-sm">
+                <span>{item.productName} (x{item.quantity})</span>
+                <span>${(item.price * item.quantity)}</span>
               </div>
-              <div className="flex justify-between text-sm">
-                <span>Panela orgánica</span>
-                <span>$35.000</span>
-              </div>
+                ))}
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Envío</span>
-                <span>$5.000</span>
+                 <span>${shipping}</span>
               </div>
               <hr />
               <div className="flex justify-between font-semibold text-base">
                 <span>Total</span>
-                <span>$70.000</span>
+                <span>${total}</span>
               </div>
             </div>
           </div>
