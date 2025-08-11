@@ -4,6 +4,10 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false); 
+
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
 
   const addToCart = (item: CartItem) => {
     const exists = cartItems.find((i) => i.productId === item.productId);
@@ -18,6 +22,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     } else {
       setCartItems((prev) => [...prev, item]);
     }
+    openCart();
   };
 
   const incrementItem = (productId: string) => {
@@ -48,7 +53,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, incrementItem, decrementItem, removeItem }}
+      value={{ cartItems, addToCart, incrementItem, decrementItem, removeItem, isCartOpen, openCart, closeCart }}
     >
       {children}
     </CartContext.Provider>

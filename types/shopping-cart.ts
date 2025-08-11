@@ -12,4 +12,7 @@ type CartContextType = {
   incrementItem: (productId: string) => void;
   decrementItem: (productId: string) => void;
   removeItem: (productId: string) => void;
+  isCartOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
 };
