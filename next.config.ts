@@ -3,10 +3,10 @@ module.exports = {
   reactStrictMode: true,
   images: {
     domains: [
-      // Cambiar al dominio final
       "www.arepasguerrero.com",
       "jumbocolombiaio.vtexassets.com",
       "picsum.photos",
+      "localhost"
     ],
   },
 };
