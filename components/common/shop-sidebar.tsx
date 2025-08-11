@@ -12,21 +12,20 @@ import { useCart } from '@/contexts/cart-context';
 import Link from "next/link";
 
 export default function ShopSiderBar() {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const { cartItems, incrementItem, decrementItem, removeItem } = useCart();
+  const { cartItems, incrementItem, decrementItem, removeItem, isCartOpen, closeCart, openCart } = useCart();
 
-  return (
+   return (
     <>
       <Button className="bg-custom-dark-green text-custom-cream hover:bg-custom-green transition"
-        onPress={onOpen}
+        onPress={openCart}
         startContent={<CartIcon className="text-custom-red" />}
       >
         Carrito ({cartItems.length})
       </Button>
 
-      <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Drawer isOpen={isCartOpen} onOpenChange={(open) => !open && closeCart()}>
         <DrawerContent>
-          {(onClose) => (
+          {() => (
             <>
               <DrawerBody className="space-y-4">
                 {cartItems.length === 0 ? (
@@ -39,9 +38,7 @@ export default function ShopSiderBar() {
                       key={index}
                       className="flex gap-4 items-center border-b pb-4"
                     >
-                      <div className="w-20 h-20 rounded overflow-hidden border">
-
-                      </div>
+                      <div className="w-20 h-20 rounded overflow-hidden border"/>
 
                       <div className="flex-1">
                         <h3 className="font-semibold text-base">
@@ -90,7 +87,7 @@ export default function ShopSiderBar() {
 
               {cartItems.length > 0 && (
                 <DrawerFooter className="flex justify-between items-center border-t pt-4">
-                  <Button color="danger" variant="light" onPress={onClose}>
+                  <Button color="danger" variant="light" onPress={closeCart}>
                     Cerrar
                   </Button>
                   <Link href="/checkout/shipping" passHref legacyBehavior>
