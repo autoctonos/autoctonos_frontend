@@ -1,69 +1,107 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Card, Chip, Image, Divider } from "@heroui/react";
 
 interface Producto {
-    nombre: string;
-    created_at: string | number | Date;
-    estado: "Aprobado" | "Rechazado" | "Revisión";
-    descripcion: string;
-    stock: number;
-    mensaje?: string;
+  id_post: number;
+  nombre: string;
+  created_at: string | number | Date;
+  estado: "Aprobado" | "Rechazado" | "Revisión";
+  descripcion: string;
+  stock: number;
+  mensaje?: string;
+}
+
+interface ImagenProducto {
+  id_imagen: number;
+  id_post: number;
+  url_imagen: string;
+  created_at: string;
 }
 
 interface ProductosCardsProps {
-    data: Producto[];
+  data: Producto[];
 }
 
 const statusColorMap: Record<Producto["estado"], "success" | "danger" | "warning"> = {
-    Aprobado: "success",
-    Rechazado: "danger",
-    Revisión: "warning"
+  Aprobado: "success",
+  Rechazado: "danger",
+  Revisión: "warning",
 };
 
 const formatDate = (dateString: string | number | Date) => {
-    const date = new Date(dateString);
-    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
-        .toString()
-        .padStart(2, '0')}/${date.getFullYear()}`;
+  const date = new Date(dateString);
+  return `${date.getDate().toString().padStart(2, "0")}/${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}/${date.getFullYear()}`;
 };
 
 export default function ProductosCards({ data: productos }: ProductosCardsProps) {
+  const [imagenesMap, setImagenesMap] = useState<Record<number, string[]>>({});
 
-    return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {productos.map((producto, index) => (
-                <Card key={index} className="border rounded-lg p-4 shadow-sm">
-                    <div className="flex items-center justify-between mb-3">
-                        <div>
-                            <h4 className="font-medium">{producto.nombre}</h4>
-                            <p className="text-sm text-gray-500">Subido el: {formatDate(producto.created_at)}</p>
-                        </div>
-                        <Chip color={statusColorMap[producto.estado]}>{producto.estado}</Chip>
-                    </div>
+  useEffect(() => {
+    async function fetchImagenes() {
+      try {
+        const res = await fetch("http://localhost:8000/api/productos/imagenes_productos/");
+        if (!res.ok) throw new Error("Failed to fetch images");
+        const data: ImagenProducto[] = await res.json();
 
-                    <div className="flex justify-center mb-3">
-                        {/* TODO: IMAGE HANDLING */}
-                        <Image
-                            src="https://picsum.photos/1280/720"
-                            alt={producto.nombre}
-                            height={200}
-                            width={400}
-                            className="w-full h-40 object-cover rounded-md"
-                        />
-                    </div>
+        const map: Record<number, string[]> = {};
 
-                    <div className="mb-3">
-                        <p className="text-sm mb-2">{producto.descripcion}</p>
-                        <p className="text-sm font-medium">Stock disponible: {producto.stock} unidades</p>
-                    </div>
+        data.forEach(({ id_post, url_imagen }) => {
+          if (!map[id_post]) {
+            map[id_post] = [];
+          }
+          map[id_post].push(url_imagen);
+        });
 
-                    <Divider className="border-t mt-2 mb-2" />
-                    <p className="text-sm">
-                        <span className="font-medium">Comentario:</span> {producto.mensaje || "Sin comentarios adicionales."}
-                    </p>
-                </Card>
-            ))}
-        </div>
-    );
+        setImagenesMap(map);
+      } catch (error) {
+        console.error("Error fetching product images:", error);
+      }
+    }
+
+    fetchImagenes();
+  }, []);
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {productos.map((producto) => {
+        const imagenes = imagenesMap[producto.id_post] || [];
+        const imagenSrc = imagenes.length > 0 ? imagenes[0] : "https://picsum.photos/1280/720";
+
+        return (
+          <Card key={producto.id_post} className="border rounded-lg p-4 shadow-sm">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <h4 className="font-medium">{producto.nombre}</h4>
+                <p className="text-sm text-gray-500">Subido el: {formatDate(producto.created_at)}</p>
+              </div>
+              <Chip color={statusColorMap[producto.estado]}>{producto.estado}</Chip>
+            </div>
+
+            <div className="flex justify-center mb-3">
+              <Image
+                src={imagenSrc}
+                alt={producto.nombre}
+                height={200}
+                width={400}
+                className="w-full h-40 object-cover rounded-md"
+              />
+            </div>
+
+            <div className="mb-3">
+              <p className="text-sm mb-2">{producto.descripcion}</p>
+              <p className="text-sm font-medium">Stock disponible: {producto.stock} unidades</p>
+            </div>
+
+            <Divider className="border-t mt-2 mb-2" />
+            <p className="text-sm">
+              <span className="font-medium">Comentario:</span> {producto.mensaje || "Sin comentarios adicionales."}
+            </p>
+          </Card>
+        );
+      })}
+    </div>
+  );
 }

@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import { useState, useEffect } from "react";
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -9,7 +10,6 @@ import {
   NavbarMenuItem,
 } from "@heroui/navbar";
 import { Button } from "@heroui/button";
-import { Kbd } from "@heroui/kbd";
 import { Link } from "@heroui/link";
 import { Input } from "@heroui/input";
 import { link as linkStyles } from "@heroui/theme";
@@ -17,51 +17,127 @@ import NextLink from "next/link";
 import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 import Image from "next/image";
-
-
-import {
-  HeartFilledIcon,
-  SearchIcon,
-} from "@/components/icons";
+import { HeartFilledIcon, SearchIcon } from "@/components/icons";
 import Drop from "@/components/common/dropdown";
 import ShopSiderBar from "@/components/common/shop-sidebar";
 
 export const Navbar = () => {
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-custom-cream bg-opacity-60 w-full border-custom-medium-green",
-        input: "text-sm text-custom-black",
-      }}
-      labelPlacement="outside"
-      placeholder="Encuentra tu proxímo producto..."
-      startContent={
-        <SearchIcon className="text-base text-custom-medium-green pointer-events-none flex-shrink-0" />
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+   useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      if (query.trim().length > 1) {
+        setLoading(true);
+        fetch(`http://localhost:8000/api/productos/productos-con-imagenes/`)
+          .then((res) => res.json())
+          .then((data) => {
+            const filtered = data.filter((p) =>
+              p.nombre.toLowerCase().includes(query.toLowerCase())
+            );
+            setResults(filtered);
+          })
+          .catch((err) => console.error(err))
+          .finally(() => setLoading(false));
+      } else {
+        setResults([]);
       }
-      type="search"
-    />
+    }, 400);
+
+    return () => clearTimeout(delayDebounce);
+  }, [query]);
+
+  const searchInput = (
+    <div className="relative w-full lg:w-[400px]">
+      <Input
+        aria-label="Search"
+        classNames={{
+          inputWrapper:
+            "bg-custom-cream bg-opacity-60 w-full border-custom-medium-green",
+          input: "text-sm text-custom-black",
+        }}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        labelPlacement="outside"
+        placeholder="Encuentra tu próximo producto..."
+        startContent={
+          <SearchIcon className="text-base text-custom-medium-green pointer-events-none flex-shrink-0" />
+        }
+        type="search"
+      />
+
+      {query && results.length > 0 && (
+        <ul className="absolute z-50 top-full left-0 w-full bg-white border border-gray-200 rounded-b-lg shadow-lg max-h-80 overflow-auto">
+          {results.map((producto) => {
+            const imageUrl =
+              producto.imagenes && producto.imagenes.length > 0
+                ? decodeURIComponent(
+                  producto.imagenes[0].url_imagen.replace("/media/", "")
+                  )
+                : "/placeholder.png";
+
+            return (
+              <li
+                key={producto.id_producto}
+                className="flex items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer text-sm"
+              >
+                <NextLink
+                  href={`/producto/${producto.id_producto}`}
+                  className="flex items-center gap-3 w-full"
+                >
+                  <Image
+                    src={imageUrl}
+                    alt={producto.nombre}
+                    width={50}
+                    height={50}
+                    className="rounded object-cover flex-shrink-0"
+                  />
+                  <div className="flex flex-col">
+                    <span className="font-medium text-gray-800">
+                      {producto.nombre}
+                    </span>
+                    <span className="text-gray-500 text-xs">
+                      ${producto.precio}
+                    </span>
+                  </div>
+                </NextLink>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      {/* Loading */}
+      {loading && (
+        <div className="absolute top-full left-0 w-full bg-white p-2 text-sm text-gray-500">
+          Buscando...
+        </div>
+      )}
+    </div>
   );
 
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky" className="bg-custom-cream bg-opacity-80 border-b border-custom-medium-green">
+    <HeroUINavbar
+      maxWidth="xl"
+      position="sticky"
+      className="bg-custom-cream bg-opacity-80 border-b border-custom-medium-green"
+    >
       <NavbarContent className="basis-1/4 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Image src="/logo.svg"
-              alt="logo"
-              height={70}
-              width={70}
-            />
+            <Image src="/logo.svg" alt="logo" height={70} width={70} />
           </NextLink>
         </NavbarBrand>
+
+        {/* Menu principal */}
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color="foreground"
                 href={item.href}
@@ -71,12 +147,12 @@ export const Navbar = () => {
             </NavbarItem>
           ))}
         </ul>
+
         <NavbarItem>
           <ul className="hidden lg:flex">
             <Drop title="Categorias" />
           </ul>
-        </ NavbarItem>
-
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarContent
@@ -95,7 +171,6 @@ export const Navbar = () => {
             </Button>
           </NextLink>
         </NavbarItem>
-
         <NavbarItem className="hidden md:flex">
           <ShopSiderBar />
         </NavbarItem>
@@ -115,8 +190,8 @@ export const Navbar = () => {
                   index === 2
                     ? "primary"
                     : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
+                    ? "danger"
+                    : "foreground"
                 }
                 href="#"
                 size="lg"
