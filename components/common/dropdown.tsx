@@ -24,7 +24,7 @@ export default function Drop({ title }: { title: string }) {
       <DropdownTrigger>
         <Button className="text-medium" variant="light">{title}</Button>
       </DropdownTrigger>
-      <DropdownMenu aria-label="Selecciona una categoría" onAction={(key) => key && router.push(`/categorias/${key}`)}>
+      <DropdownMenu aria-label="Selecciona una categoría" onAction={(key) => key && router.push(`/categories/${key}`)}>
         {categories.map((item) => (
           <DropdownItem key={item.id_categoria} id={String(item.id_categoria)}>
             {item.nombre}
