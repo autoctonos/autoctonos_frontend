@@ -26,7 +26,7 @@ export const Navbar = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
-   useEffect(() => {
+  useEffect(() => {
     const delayDebounce = setTimeout(() => {
       if (query.trim().length > 1) {
         setLoading(true);
