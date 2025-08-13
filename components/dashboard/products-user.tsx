@@ -40,8 +40,8 @@ const withLocalhost = (src?: string) => {
   const s = String(src ?? "").trim();
   if (!s) return "";
   if (s.startsWith("http://") || s.startsWith("https://")) return s;
-  if (s.startsWith("/media/")) return `http://localhost:8000${s}`;
-  if (s.startsWith("media/")) return `http://localhost:8000/${s}`;
+  if (s.startsWith("/media/")) return `http://localhost:8001${s}`;
+  if (s.startsWith("media/")) return `http://localhost:8001/${s}`;
   return s;
 };
 
@@ -51,7 +51,7 @@ export default function ProductosCards({ data: productos }: ProductosCardsProps)
   useEffect(() => {
     async function fetchImagenes() {
       try {
-        const res = await fetch("http://localhost:8000/api/productos/imagenes_productos/");
+        const res = await fetch("http://37.27.11.226:8001/api/productos/imagenes_productos/");
         if (!res.ok) throw new Error("Failed to fetch images");
         const data: ImagenProducto[] = await res.json();
         const map: Record<number, string[]> = {};

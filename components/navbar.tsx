@@ -34,7 +34,7 @@ export const Navbar = () => {
     const delayDebounce = setTimeout(() => {
       if (query.trim().length > 1) {
         setLoading(true);
-        fetch(`http://localhost:8000/api/productos/productos-con-imagenes/`)
+        fetch(`http://37.27.11.226:8001/api/productos/productos-con-imagenes/`)
           .then((res) => res.json())
           .then((data) => {
             const arr = data as Producto[];

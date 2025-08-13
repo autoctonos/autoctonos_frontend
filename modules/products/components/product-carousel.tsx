@@ -23,8 +23,8 @@ export default function ImageCarousel({
     const s = String(src ?? "").trim();
     if (!s) return "";
     if (s.startsWith("http://") || s.startsWith("https://")) return s;
-    if (s.startsWith("/media/")) return `http://localhost:8000${s}`;
-    if (s.startsWith("media/")) return `http://localhost:8000/${s}`;
+    if (s.startsWith("/media/")) return `http://37.27.11.226:8001${s}`;
+    if (s.startsWith("media/")) return `http://37.27.11.226:8001/${s}`;
     return s;
   };
 

@@ -115,7 +115,7 @@ export default function SellProductPage() {
     const fetchCategorias = async () => {
       try {
         setCatLoading(true);
-        const res = await fetch("http://localhost:8000/api/productos/categorias/", {
+        const res = await fetch("http://37.27.11.226:8001/api/productos/categorias/", {
           signal: ac.signal,
         });
         if (!res.ok) throw new Error("No se pudieron obtener las categorías");
