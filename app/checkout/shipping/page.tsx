@@ -1,23 +1,20 @@
 "use client"
 
-import Layout from "@/components/layout/layout"
-import { useState } from "react"
-import { Input, Button, Form } from "@heroui/react"
+import { useState } from "react";
+import { Input, Button, Form } from "@heroui/react";
+import { useAtom } from "jotai";
+import { shippingAtom } from "@/atoms/shipping";
 import { useCart } from "@/contexts/cart-context";
+import Layout from "@/components/layout/layout";
 
 export default function ShippingPage() {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    zip: "",
-    country: "",
-    state: "",
-  })
-  const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useAtom(shippingAtom);
+  const [loading, setLoading] = useState(false);
+  const { cartItems, clearCart } = useCart();
+
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const shipping = 5000;
+  const total = subtotal + shipping;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -34,13 +31,18 @@ export default function ShippingPage() {
       body: JSON.stringify({
         description: "Compra en Autóctono",
         referenceCode: `AUTO-${Date.now()}`,
-        amount: "70000",
+        amount: total,
         email: formData.email,
         name: fullName,
       }),
     })
 
     const data = await res.json()
+
+    if (res.ok) {
+      clearCart();
+    }
+
 
     const form = document.createElement("form")
     form.method = "POST"
@@ -57,12 +59,6 @@ export default function ShippingPage() {
     document.body.appendChild(form)
     form.submit()
   }
-
-  const { cartItems } = useCart();
-
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const shipping = 5000;
-  const total = subtotal + shipping;
 
   return (
     <Layout>
