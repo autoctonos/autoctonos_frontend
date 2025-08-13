@@ -1,5 +1,5 @@
 "use server";
-import { ProductsFormData } from "@/types/products";
+import { ProductFormData } from "@/types/products";
 
 const backendUrl = process.env.BACKEND_URL || "";
 
@@ -25,9 +25,9 @@ export const getProducts = async () => {
     }
 };
 
-export const createPost = async (formData: ProductsFormData) => {
+export const createProduct = async (formData: ProductFormData) => {
     try {
-        const response = await fetch(`${backendUrl}/productos/posts/`, {
+        const response = await fetch(`${backendUrl}/productos/productos/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

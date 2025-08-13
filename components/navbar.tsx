@@ -21,10 +21,14 @@ import { HeartFilledIcon, SearchIcon } from "@/components/icons";
 import Drop from "@/components/common/dropdown";
 import ShopSiderBar from "@/components/common/shop-sidebar";
 
+type Imagen = { url_imagen: string };
+type Producto = { id_producto: number; nombre: string; precio: number | string; imagenes?: Imagen[] };
+type NavItem = { href: string; label: string };
+
 export const Navbar = () => {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useState<string>("");
+  const [results, setResults] = useState<Producto[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -33,12 +37,13 @@ export const Navbar = () => {
         fetch(`http://localhost:8000/api/productos/productos-con-imagenes/`)
           .then((res) => res.json())
           .then((data) => {
-            const filtered = data.filter((p) =>
+            const arr = data as Producto[];
+            const filtered = arr.filter((p) =>
               p.nombre.toLowerCase().includes(query.toLowerCase())
             );
             setResults(filtered);
           })
-          .catch((err) => console.error(err))
+          .catch(() => {})
           .finally(() => setLoading(false));
       } else {
         setResults([]);
@@ -73,7 +78,7 @@ export const Navbar = () => {
             const imageUrl =
               producto.imagenes && producto.imagenes.length > 0
                 ? decodeURIComponent(
-                  producto.imagenes[0].url_imagen.replace("/media/", "")
+                    producto.imagenes[0].url_imagen.replace("/media/", "")
                   )
                 : "/placeholder.png";
 
@@ -108,7 +113,6 @@ export const Navbar = () => {
         </ul>
       )}
 
-      {/* Loading */}
       {loading && (
         <div className="absolute top-full left-0 w-full bg-white p-2 text-sm text-gray-500">
           Buscando...
@@ -130,9 +134,8 @@ export const Navbar = () => {
           </NextLink>
         </NavbarBrand>
 
-        {/* Menu principal */}
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
+          {(siteConfig.navItems as NavItem[]).map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
@@ -183,13 +186,13 @@ export const Navbar = () => {
       <NavbarMenu className="bg-custom-cream bg-opacity-95">
         {searchInput}
         <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
+          {(siteConfig.navMenuItems as NavItem[]).map((item, index) => (
+            <NavbarMenuItem key={`${item.href}-${index}`}>
               <Link
                 color={
                   index === 2
                     ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
+                    : index === (siteConfig.navMenuItems as NavItem[]).length - 1
                     ? "danger"
                     : "foreground"
                 }

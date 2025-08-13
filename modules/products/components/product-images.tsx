@@ -11,7 +11,6 @@ export default function ProductImages({
 }) {
   const decodedImages = images.map((img) => ({
     ...img,
-    url_imagen: decodeURIComponent(img.url_imagen.replace(/^\/media\//, "")),
   }));
 
   return <ImageCarousel images={decodedImages} productName={productName} />;

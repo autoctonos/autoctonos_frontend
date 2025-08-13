@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { HeroUIProvider } from "@heroui/system";
+import { HeroUIProvider } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import AuthProvider from "@/components/session/sessionProvider";
 import { CartProvider } from '@/contexts/cart-context';
-import { ToastProvider } from "@heroui/toast";
+import { ToastProvider } from "@heroui/react";
 
 export interface ProvidersProps {
   children: React.ReactNode;

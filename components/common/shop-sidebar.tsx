@@ -1,11 +1,9 @@
 import {
   Drawer,
   DrawerContent,
-  DrawerHeader,
   DrawerBody,
   DrawerFooter,
   Button,
-  useDisclosure,
 } from "@heroui/react";
 import { CartIcon } from "@/components/icons";
 import { useCart } from '@/contexts/cart-context';

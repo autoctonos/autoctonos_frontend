@@ -4,8 +4,8 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND;
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export function useFetchDataById(endpoint: string, id: number) {
-  const url = id ? `${API_BASE_URL}/${endpoint}?id_usuario=${id}` : null;
+export function useFetchDataById(endpoint: string) {
+  const url = `${API_BASE_URL}/${endpoint}`;
   const { data, error } = useSWR(url, fetcher);
 
   return {

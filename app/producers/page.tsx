@@ -1,6 +1,5 @@
 "use client"
 import MainLayout from "@/components/layout/main"
-import { Card, CardBody } from "@heroui/card"
 import { title, subtitle } from "@/components/primitives"
 import Image from "next/image"
 

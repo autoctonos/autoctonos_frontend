@@ -3,7 +3,6 @@
 import { Navbar } from "@/components/navbar";
 import Layout from "@/components/layout/layout";
 import SideBarPayments from "@/app/shopping/components/SideBarPayments";
-import PaymentForm from "@/app/shopping/components/PaymentForm";
 import RegistrationForm from "./components/RegistrationForm";
 
 export default function DashboardPage() {
