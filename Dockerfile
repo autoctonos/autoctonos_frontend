@@ -3,7 +3,7 @@ RUN apk add --no-cache g++ make py3-pip libc6-compat
 RUN corepack enable && corepack prepare pnpm@8.15.4 --activate
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
-EXPOSE 3000
+EXPOSE 3001
 
 FROM base as builder
 WORKDIR /app
