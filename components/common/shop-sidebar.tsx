@@ -4,15 +4,21 @@ import {
   DrawerHeader,
   DrawerBody,
   DrawerFooter,
-  Button,
-  useDisclosure,
+  Button
 } from "@heroui/react";
 import { CartIcon } from "@/components/icons";
 import { useCart } from '@/contexts/cart-context';
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function ShopSiderBar() {
   const { cartItems, incrementItem, decrementItem, removeItem, isCartOpen, closeCart, openCart } = useCart();
+   const [showCartCount, setShowCartCount] = useState(false);
+  useEffect(() => {
+    setShowCartCount(true);
+  }, []);
+
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
    return (
     <>
@@ -20,7 +26,7 @@ export default function ShopSiderBar() {
         onPress={openCart}
         startContent={<CartIcon className="text-custom-red" />}
       >
-        Carrito ({cartItems.length})
+        Carrito {showCartCount && totalItems > 0 ? `(${totalItems})` : ""}
       </Button>
 
       <Drawer isOpen={isCartOpen} onOpenChange={(open) => !open && closeCart()}>
