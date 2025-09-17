@@ -1,18 +1,25 @@
 "use client";
 
+import type React from "react";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import DashboardLayout from "@/components/layout/dashboard";
-import { Breadcrumbs, BreadcrumbItem } from "@heroui/breadcrumbs";
+import { Breadcrumbs, BreadcrumbItem } from "@heroui/react";
 import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
-import { createPost, uploadProductImage } from "@/auth/services/server/products";
+import { Select, SelectItem } from "@heroui/react";
+import { createProduct, uploadProductImage } from "@/auth/services/server/products";
 import { addToast } from "@heroui/react";
 
 interface ImageUploadProps {
   image: File | null;
   setImage: (file: File | null) => void;
+}
+
+interface Categoria {
+  id_categoria: number;
+  nombre: string;
 }
 
 function ImageUpload({ image, setImage }: ImageUploadProps) {
@@ -72,28 +79,77 @@ function ImageUpload({ image, setImage }: ImageUploadProps) {
   );
 }
 
+interface FormState {
+  id_categoria: number | null;
+  nombre: string;
+  descripcion: string;
+  precio: string;
+  stock: number;
+}
+
 export default function SellProductPage() {
   const { data: session, status } = useSession();
-  const [form, setForm] = useState({
-    id_usuario: session?.user?.id ?? 1,
+
+  const [form, setForm] = useState<FormState>({
+    id_categoria: null,
     nombre: "",
     descripcion: "",
     precio: "",
     stock: 0,
   });
+
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [catLoading, setCatLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (session?.user?.id) {
+      setForm((prev) => ({ ...prev, id_usuario: Number(session.user.id) }));
+    }
+  }, [session?.user?.id]);
+
+  useEffect(() => {
+    const ac = new AbortController();
+    const fetchCategorias = async () => {
+      try {
+        setCatLoading(true);
+        const res = await fetch("http://37.27.11.226:8001/api/productos/categorias/", {
+          signal: ac.signal,
+        });
+        if (!res.ok) throw new Error("No se pudieron obtener las categorías");
+        const data: Categoria[] = await res.json();
+        setCategorias(Array.isArray(data) ? data : []);
+      } catch (err) {
+        const e = err as { name?: string };
+        if (e.name !== "AbortError") {
+          addToast({ title: "Error", description: "Error al cargar categorías", color: "danger" });
+        }
+      } finally {
+        setCatLoading(false);
+      }
+    };
+    fetchCategorias();
+    return () => ac.abort();
+  }, []);
 
   if (status === "loading") {
     return <div>Loading...</div>;
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
-      [name]: name === "stock" ? parseInt(value, 10) || 0 : value,
+      [name]: name === "stock" ? parseInt(value as string, 10) || 0 : (value as string),
     }));
+  };
+
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange(e);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -101,24 +157,30 @@ export default function SellProductPage() {
     setLoading(true);
 
     if (!session?.user?.id) {
-      addToast({ title: "Error", message: "Usuario no autenticado", color: "danger" });
+      addToast({ title: "Error", description: "Usuario no autenticado", color: "danger" });
+      setLoading(false);
+      return;
+    }
+
+    if (!form.id_categoria) {
+      addToast({ title: "Atención", description: "Selecciona una categoría", color: "warning" });
       setLoading(false);
       return;
     }
 
     try {
-      const postResult = await createPost({
-        id_usuario: form.id_usuario,
+      const productResult = await createProduct({
+        id_categoria: Number(form.id_categoria),
         nombre: form.nombre,
         descripcion: form.descripcion,
         precio: form.precio,
-        stock: form.stock,
+        stock: form.stock as unknown as string,
       });
 
-      if (!postResult.success || !postResult.data?.id_post) {
+      if (!productResult.success || !productResult.data?.id_producto) {
         addToast({
           title: "Error",
-          message: postResult.message || "Error al crear el producto",
+          description: productResult.message || "Error al crear el producto",
           color: "danger",
         });
         setLoading(false);
@@ -127,7 +189,7 @@ export default function SellProductPage() {
 
       if (image) {
         const formDataImg = new FormData();
-        formDataImg.append("id_post", postResult.data.id_post);
+        formDataImg.append("id_producto", String(productResult.data.id_producto));
         formDataImg.append("url_imagen", image);
 
         const imgResult = await uploadProductImage(formDataImg);
@@ -135,7 +197,7 @@ export default function SellProductPage() {
         if (!imgResult.success) {
           addToast({
             title: "Atención",
-            message: "Producto creado pero la imagen no se pudo subir",
+            description: "Producto creado pero la imagen no se pudo subir",
             color: "warning",
           });
           setLoading(false);
@@ -143,12 +205,17 @@ export default function SellProductPage() {
         }
       }
 
-      // Éxito total
-      addToast({ title: "Éxito", message: "Producto publicado exitosamente", color: "success" });
-      setForm({ id_usuario: session.user.id, nombre: "", descripcion: "", precio: "", stock: 0 });
+      addToast({ title: "Éxito", description: "Producto publicado exitosamente", color: "success" });
+      setForm({
+        id_categoria: null,
+        nombre: "",
+        descripcion: "",
+        precio: "",
+        stock: 0,
+      });
       setImage(null);
-    } catch (error) {
-      addToast({ title: "Error", message: "Error inesperado", color: "danger" });
+    } catch {
+      addToast({ title: "Error", description: "Error inesperado", color: "danger" });
     }
 
     setLoading(false);
@@ -163,14 +230,62 @@ export default function SellProductPage() {
       <Card>
         <CardBody>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <Input label="Nombre" name="nombre" value={form.nombre} onChange={handleChange} required />
-            <Textarea label="Descripción" name="descripcion" value={form.descripcion} onChange={handleChange} required />
-            <Input label="Stock" name="stock" type="number" value={form.stock} onChange={handleChange} required />
-            <Input label="Precio" name="precio" type="number" value={form.precio} onChange={handleChange} required />
-            
+            <Input
+              label="Nombre"
+              name="nombre"
+              value={form.nombre}
+              onChange={handleInputChange}
+              required
+            />
+            <Textarea
+              label="Descripción"
+              name="descripcion"
+              value={form.descripcion}
+              onChange={handleChange}
+              required
+            />
+            <Select
+              label="Categoría"
+              placeholder={catLoading ? "Cargando..." : "Selecciona una categoría"}
+              isDisabled={catLoading}
+              selectedKeys={form.id_categoria ? new Set([String(form.id_categoria)]) : new Set([])}
+              onSelectionChange={(keys: "all" | Set<React.Key>) => {
+                const key = Array.from(keys as Set<React.Key>)[0];
+                setForm((prev) => ({ ...prev, id_categoria: key ? Number(key) : null }));
+              }}
+              variant="bordered"
+              classNames={{
+                trigger: "border-custom-medium-green focus-within:border-custom-dark-green",
+              }}
+              items={categorias}
+            >
+              {(cat) => (
+                <SelectItem key={String(cat.id_categoria)}>{cat.nombre}</SelectItem>
+              )}
+            </Select>
+
+            <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+              <Input
+                label="Stock"
+                name="stock"
+                type="number"
+                value={String(form.stock)}
+                onChange={handleInputChange}
+                required
+              />
+              <Input
+                label="Precio"
+                name="precio"
+                type="number"
+                value={form.precio}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
             <ImageUpload image={image} setImage={setImage} />
 
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" isDisabled={loading} color="primary">
               {loading ? "Publicando..." : "Publicar Producto"}
             </Button>
           </form>

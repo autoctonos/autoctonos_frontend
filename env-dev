@@ -1,4 +1,8 @@
-env=dev
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-secret-key
-BACKEND_URL="http://django-web:8000/api/token/"
+env=production
+NEXTAUTH_URL=http://37.27.11.226:3001
+AUTH_SECRET=qonr9OfFupelAk77EeShZH+GXSGlStoNev+e0XlNMmk=
+BACKEND_URL=http://37.27.11.226:8001/api
+NEXT_PUBLIC_BACKEND=http://37.27.11.226:8001/api
+PAYU_MERCHANT_ID=508029
+PAYU_ACCOUNT_ID=512321
+PAYU_API_KEY=4Vj8eK4rloUd272L48hsrarnUA

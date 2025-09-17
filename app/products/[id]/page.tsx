@@ -2,7 +2,10 @@ import { Navbar } from "@/components/navbar";
 import ProductTemplate from "@/modules/products/templates";
 import { getProductDetail } from "@/auth/services/server/product-detail";
 
-export default async function ProductPage({ params }: { params: { id: string }}) {
+type PageParams = { id: string };
+type ProductPageProps = { params: Promise<PageParams> };
+
+export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params;
   const productId = id;
 
@@ -19,4 +22,3 @@ export default async function ProductPage({ params }: { params: { id: string }})
     </section>
   );
 }
-

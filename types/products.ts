@@ -1,8 +1,8 @@
-export type ProductsFormData = {
-    id_usuario: number;
+export type ProductFormData = {
+    id_categoria: number;
     nombre: string;
     descripcion: string;
-    precio: string;
-    stock: string;
-    estado: string;
-};
+    precio: string;  
+    stock: string;  
+  };
+  

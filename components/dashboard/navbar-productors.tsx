@@ -14,7 +14,7 @@ import LogoutButton from "../auth/logoutButton";
 import { useSession } from "next-auth/react";
 
 export default function NavbarProductors() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   return (
     <Navbar isBordered>
       <NavbarContent justify="center">

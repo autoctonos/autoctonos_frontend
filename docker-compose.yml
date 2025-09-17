@@ -1,17 +1,21 @@
-version: '3.8'
 services:
   app:
     image: autoctonos-web
     build:
       context: ./
-      target: ${env}
+      target: ${env}         
       dockerfile: Dockerfile
-    volumes:
-        - .:/app
-        - /app/node_modules
-        - /app/.next
+    environment:
+      NODE_ENV: production
+      NEXTAUTH_URL: "http://37.27.11.226:3001"
+      AUTH_SECRET: "qonr9OfFupelAk77EeShZH+GXSGlStoNev+e0XlNMmk="
+      BACKEND_URL: "http://37.27.11.226:8001/api"   # nombre del contenedor backend en la MISMA red
+      NEXT_PUBLIC_BACKEND: "http://37.27.11.226:8001/api"  # opcional si sigues llamando directo desde el browser
+      PAYU_MERCHANT_ID: "508029"
+      PAYU_ACCOUNT_ID: "512321"
+      PAYU_API_KEY: "4Vj8eK4rloUd272L48hsrarnUA"
     ports:
-      - "3000:3000"
+      - "3001:3001"
     networks:
       - autoctonos_network
 

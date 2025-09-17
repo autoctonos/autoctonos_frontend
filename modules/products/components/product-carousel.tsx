@@ -18,6 +18,16 @@ export default function ImageCarousel({
   const [canScrollNext, setCanScrollNext] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  // Convierte "/media/..." a "http://localhost:8000/media/..."
+  const withLocalhost = (src?: string) => {
+    const s = String(src ?? "").trim();
+    if (!s) return "";
+    if (s.startsWith("http://") || s.startsWith("https://")) return s;
+    if (s.startsWith("/media/")) return `http://37.27.11.226:8001${s}`;
+    if (s.startsWith("media/")) return `http://37.27.11.226:8001/${s}`;
+    return s;
+  };
+
   const handleImageError = () => {
     setFallbackImage("/respaldo.png");
   };
@@ -47,16 +57,16 @@ export default function ImageCarousel({
             {images.map((img, index) => (
               <div
                 className="min-w-full flex justify-center"
-                key={img.id_imagen}
+                key={img.id_imagen ?? index}
               >
-                
                 <Image
-                  src={fallbackImage || img.url_imagen}
+                  src={fallbackImage || withLocalhost(img.url_imagen)}
                   alt={productName}
                   width={500}
                   height={500}
                   className="rounded-lg"
                   onError={handleImageError}
+                  unoptimized  // <- evita /_next/image, consulta directo a :8000
                 />
               </div>
             ))}
@@ -67,6 +77,7 @@ export default function ImageCarousel({
           <button
             className="h-10 w-7 sm:h-8 sm:w-8 absolute left-2 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-300"
             onClick={() => emblaApi?.scrollPrev()}
+            aria-label="Imagen anterior"
           >
             <ArrowLeft size={20} />
           </button>
@@ -76,6 +87,7 @@ export default function ImageCarousel({
           <button
             className="h-10 w-7 sm:h-8 sm:w-8 absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-300"
             onClick={() => emblaApi?.scrollNext()}
+            aria-label="Imagen siguiente"
           >
             <ArrowRigth size={20} />
           </button>
@@ -85,18 +97,20 @@ export default function ImageCarousel({
       <div className="flex gap-2 mt-4">
         {images.map((img, index) => (
           <button
-            key={img.id_imagen}
+            key={img.id_imagen ?? index}
             className={`border-2 rounded-lg overflow-hidden ${
               selectedIndex === index ? "border-custom-red" : "border-transparent"
             }`}
             onClick={() => handleThumbnailClick(index)}
+            aria-label={`Miniatura ${index + 1}`}
           >
             <Image
-              src={img.url_imagen}
+              src={withLocalhost(img.url_imagen)}
               alt={`${productName} thumbnail`}
               width={60}
               height={60}
               className="object-cover w-16 h-16 rounded-lg"
+              unoptimized 
             />
           </button>
         ))}
